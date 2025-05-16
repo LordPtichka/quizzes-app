@@ -1,0 +1,62 @@
+services:
+
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: [ "server", "/data", "--console-address", ":9001" ]
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    networks:
+      - quizzNet
+    volumes:
+      - minio_data:/data
+      - ../minio/cors.json:/etc/minio/cors.json # подключаем CORS-политику
+
+  nextjs:
+    platform: linux/arm64
+    build:
+      context: ../quizzes-next
+      dockerfile: ../docker_config/dockerfile.frontend
+    ports:
+      - "3000:3000"
+      # - "80:80"
+      # - "443:443"
+    volumes:
+      - ../quizzes-next:/usr/app
+      - ../certs:/etc/letsencrypt # Директория для хранения сертификатов
+      - /usr/app/node_modules
+    # environment:
+    #   NODE_ENV: development
+    #   MINIO_ENDPOINT: minio
+    #   MINIO_PORT: 9000
+    #   MINIO_USE_SSL: 'false'
+    #   MINIO_ACCESS_KEY: minioadmin
+    #   MINIO_SECRET_KEY: minioadmin
+    #   MINIO_BUCKET_NAME: uploads
+    networks:
+      - quizzNet
+    depends_on:
+      - minio
+
+  json-server:
+    build:
+      context: ../json_server
+      dockerfile: ../docker_config/dockerfile.backend
+    ports:
+      - "4000:4000"
+    volumes:
+      - ../json_server:/usr/app
+    networks:
+      - quizzNet
+
+networks:
+  quizzNet:
+
+
+volumes:
+  minio_data:
+
+

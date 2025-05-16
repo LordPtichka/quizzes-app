@@ -1,0 +1,32 @@
+.cardBlock {}
+
+.card {
+    min-width: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffb15e;
+    padding: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 500ms;
+}
+
+.card:hover {
+    transform: scale(110%);
+    transition: 500ms
+}
+
+.textWhite {
+    color: #fff;
+}
+
+.cardBlock.active {
+    background-color: #ec0d09;
+    /* Красный оттенок */
+}
+
+.active {
+    background-color: red !important;
+    /* или border: 2px solid red; в зависимости от дизайна */
+}

@@ -1,0 +1,22 @@
+[
+    {
+        "AllowedHeaders": [
+            "*"
+        ],
+        "AllowedMethods": [
+            "GET",
+            "HEAD",
+            "OPTIONS"
+        ],
+        "AllowedOrigins": [
+            "http://localhost:3000",
+            "http://nextjs:3000"
+        ],
+        "ExposeHeaders": [
+            "ETag",
+            "Accept-Ranges",
+            "Content-Encoding",
+            "Content-Range"
+        ]
+    }
+]
