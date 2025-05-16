@@ -16,7 +16,8 @@ services:
       - ../minio/cors.json:/etc/minio/cors.json # подключаем CORS-политику
 
   nextjs:
-    platform: linux/arm64
+    # platform: linux/arm64
+    platform: linux/amd64
     build:
       context: ../quizzes-next
       dockerfile: ../docker_config/dockerfile.frontend
